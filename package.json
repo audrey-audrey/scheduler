@@ -15,7 +15,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public --ci",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "pretest": "eslint --ignore-path .gitignore ."
   },
   "browserslist": {
     "production": [
@@ -39,6 +40,9 @@
     "@testing-library/jest-dom": "^4.0.0",
     "@testing-library/react": "^8.0.7",
     "babel-loader": "^8.0.5",
+    "eslint": "^7.18.0",
+    "eslint-config-strongloop": "^2.1.0",
+    "eslint-plugin-react": "^7.22.0",
     "node-sass": "^4.11.0"
   },
   "jest": {
