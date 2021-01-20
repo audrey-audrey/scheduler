@@ -17,8 +17,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public --ci",
-    "build-storybook": "build-storybook -s public",
-    "pretest": "eslint --ignore-path .gitignore ."
+    "build-storybook": "build-storybook -s public"
   },
   "browserslist": {
     "production": [
