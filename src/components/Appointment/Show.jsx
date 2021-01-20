@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function Show(props) {
-  const {student, interviewer, onEdit, onDelete} = props;
+  const { student, interviewer, onEdit, onDelete } = props;
 
   // interviewer data - { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" }
   return (
