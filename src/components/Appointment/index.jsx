@@ -7,6 +7,8 @@ import Empty from './Empty'
 import './styles.scss';
 
 export default function Appointment(props) {
+// need time & interview
+
   return (
     <article className="appointment">
       <Header time={props.time}/>
