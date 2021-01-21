@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import DayList from "./DayList"
 import Appointment from "./Appointment"
-import { getAppointmentsForDay } from "../helpers/selectors";
+import { getAppointmentsForDay, getInterviewers } from "../helpers/selectors";
 
 import "./Application.scss";
 
@@ -34,13 +34,22 @@ export default function Application(props) {
     })
   };
 
+  const getInterviewers = () => {
+    return axios({
+      url: `/api/interviewers`,
+      method: 'GET'
+    })
+  }
+
   useEffect(() => {
     Promise.all([
       getDays(), 
       getAppointments(), 
+      getInterviewers()
     ])
-    .then(([days, appointments]) => {
+    .then(([days, appointments, interviewers]) => {
       setState(prev => ({ ...prev, days: days.data, appointments: appointments.data}))
+      console.log(interviewers.data)
     })
   }, [])
 
@@ -48,14 +57,14 @@ export default function Application(props) {
   console.log("daily appts", dailyAppointments)
 
   // Mapping appointments array
-  const parsedAppointments = dailyAppointments.map((appointment) => {
+  const schedule = dailyAppointments.map((appointment) => {
     return <Appointment
       key={appointment.id}
       {...appointment}
     />
   })
   // Adding last appt
-  parsedAppointments.push(<Appointment key="last" time="5pm" />)
+  schedule.push(<Appointment key="last" time="5pm" />)
 
   // App 
   return (
@@ -80,7 +89,7 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {parsedAppointments}
+        {schedule}
       </section>
     </main>
   );
