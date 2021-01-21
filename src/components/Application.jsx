@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
 
 import DayList from "./DayList"
 import Appointment from "./Appointment"
-import { getAppointmentsForDay } from "../helpers/selectors";
-// import { getAppointmentsForDay, getInterviewers } from "../helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
 import { fetchDays, fetchAppointments, fetchInterviewers } from "../helpers/helperFunctions";
 
 import "./Application.scss";
@@ -20,6 +18,11 @@ export default function Application(props) {
 
   // setState funcs
   const setDay = day => setState(prev => ({ ...prev, day }));
+
+  // book interview
+  function bookInterview(id, interview) {
+    console.log('id', id, 'interview', interview);
+  }
 
   // Axios call to fetch info
   useEffect(() => {
@@ -39,12 +42,18 @@ export default function Application(props) {
   }, [])
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const dailyInterviewers = getInterviewersForDay(state, state.day);
 
   // Mapping appointments array
   const schedule = dailyAppointments.map((appointment) => {
+    const interview = getInterview(state, appointment.interview)
+
     return <Appointment
-      key={appointment.id}
-      {...appointment}
+    key={appointment.id}
+    {...appointment}
+    interview={interview}
+    interviewers={dailyInterviewers}
+    bookInterview={bookInterview}
     />
   })
   // Adding last appt

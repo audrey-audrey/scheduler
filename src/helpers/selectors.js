@@ -48,6 +48,7 @@ export function getInterviewersForDay(state, day) {
 
   const days = state.days;
   const interviewers = state.interviewers;
+  // console.log(interviewers)
 
   for (const item of days) {
     if (item.name === day) {
