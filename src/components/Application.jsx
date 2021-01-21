@@ -3,76 +3,52 @@ import axios from 'axios';
 
 import DayList from "./DayList"
 import Appointment from "./Appointment"
+import { getAppointmentsForDay } from "../helpers/selectors";
 
 import "./Application.scss";
-
-// Hardcoded data
-const appointments = [
-  {
-    id: 1,
-    time: "12pm",
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  {
-    id: 3,
-    time: "2pm",
-    interview: {
-      student: "Some Student",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  {
-    id: 4,
-    time: "3pm",
-    interview: {
-      student: "Random Student",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  {
-    id: 5,
-    time: "4pm",
-  }
-];
 
 export default function Application(props) {
   // State
   const [state, setState] = useState({
     day: "Monday",
-    days: []
+    days: [],
+    appointments: {}
   })
 
-  //setDay
+  // setState funcs
   const setDay = day => setState(prev => ({ ...prev, day }));
-  const setDays = days => setState(prev => ({ ...prev, days }));
+  // const setDays = days => setState(prev => ({ ...prev, days }));
 
-  // Axios call to fetch days array
+  // Axios call to fetch info
+  const getDays = () => {
+    return axios({
+      url: `/api/days`,
+      method: 'GET'
+    })
+  };
+
+  const getAppointments = () => {
+    return axios({
+      url: `/api/appointments`,
+      method: 'GET'
+    })
+  };
+
   useEffect(() => {
-    axios.get("/api/days")
-      .then((res) => setDays(res.data))
+    Promise.all([
+      getDays(), 
+      getAppointments(), 
+    ])
+    .then(([days, appointments]) => {
+      setState(prev => ({ ...prev, days: days.data, appointments: appointments.data}))
+    })
   }, [])
 
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  console.log("daily appts", dailyAppointments)
+
   // Mapping appointments array
-  const parsedAppointments = appointments.map((appointment) => {
+  const parsedAppointments = dailyAppointments.map((appointment) => {
     return <Appointment
       key={appointment.id}
       {...appointment}
