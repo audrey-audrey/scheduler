@@ -50,12 +50,11 @@ export default function Application(props) {
     ])
     .then(([days, appointments, interviewers]) => {
       setState(prev => ({ ...prev, days: days.data, appointments: appointments.data}))
-      console.log(interviewers.data)
     })
   }, [])
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-  console.log("daily appts", dailyAppointments)
+  // console.log("daily appts", dailyAppointments)
 
   // Mapping appointments array
   const schedule = dailyAppointments.map((appointment) => {
