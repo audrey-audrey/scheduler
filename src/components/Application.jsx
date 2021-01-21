@@ -5,8 +5,10 @@ import DayList from "./DayList"
 import Appointment from "./Appointment"
 import { getAppointmentsForDay } from "../helpers/selectors";
 // import { getAppointmentsForDay, getInterviewers } from "../helpers/selectors";
+import { fetchDays, fetchAppointments, fetchInterviewers } from "../helpers/helperFunctions";
 
 import "./Application.scss";
+import useVisualMode from "hooks/useVisualMode";
 
 export default function Application(props) {
   // State
@@ -18,43 +20,25 @@ export default function Application(props) {
 
   // setState funcs
   const setDay = day => setState(prev => ({ ...prev, day }));
-  // const setDays = days => setState(prev => ({ ...prev, days }));
 
   // Axios call to fetch info
-  const getDays = () => {
-    return axios({
-      url: `/api/days`,
-      method: 'GET'
-    })
-  };
-
-  const getAppointments = () => {
-    return axios({
-      url: `/api/appointments`,
-      method: 'GET'
-    })
-  };
-
-  const getInterviewers = () => {
-    return axios({
-      url: `/api/interviewers`,
-      method: 'GET'
-    })
-  }
-
   useEffect(() => {
     Promise.all([
-      getDays(), 
-      getAppointments(), 
-      getInterviewers()
+      fetchDays(),
+      fetchAppointments(),
+      fetchInterviewers()
     ])
-    .then(([days, appointments, interviewers]) => {
-      setState(prev => ({ ...prev, days: days.data, appointments: appointments.data}))
-    })
+      .then(([days, appointments, interviewers]) => {
+        setState(prev => ({
+          ...prev,
+          days: days.data,
+          appointments: appointments.data,
+          interviewers: interviewers.data
+        }))
+      })
   }, [])
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-  // console.log("daily appts", dailyAppointments)
 
   // Mapping appointments array
   const schedule = dailyAppointments.map((appointment) => {
