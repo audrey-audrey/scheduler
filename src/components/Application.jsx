@@ -3,7 +3,8 @@ import axios from 'axios';
 
 import DayList from "./DayList"
 import Appointment from "./Appointment"
-import { getAppointmentsForDay, getInterviewers } from "../helpers/selectors";
+import { getAppointmentsForDay } from "../helpers/selectors";
+// import { getAppointmentsForDay, getInterviewers } from "../helpers/selectors";
 
 import "./Application.scss";
 
