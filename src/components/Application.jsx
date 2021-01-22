@@ -5,7 +5,6 @@ import useApplicationData from '../hooks/useApplicationData'
 import DayList from "./DayList"
 import Appointment from "./Appointment"
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
-// import { fetchDays, fetchAppointments, fetchInterviewers } from "../helpers/helperFunctions";
 
 import "./Application.scss";
 
@@ -16,33 +15,6 @@ export default function Application(props) {
     bookInterview,
     cancelInterview
   } = useApplicationData();
-
-  // // State
-  // const [state, setState] = useState({
-  //   day: "Monday",
-  //   days: [],
-  //   appointments: {}
-  // })
-
-  // // setState funcs
-  // const setDay = day => setState(prev => ({ ...prev, day }));
-
-  // // Axios call to fetch info
-  // useEffect(() => {
-  //   Promise.all([
-  //     fetchDays(),
-  //     fetchAppointments(),
-  //     fetchInterviewers()
-  //   ])
-  //     .then(([days, appointments, interviewers]) => {
-  //       setState(prev => ({
-  //         ...prev,
-  //         days: days.data,
-  //         appointments: appointments.data,
-  //         interviewers: interviewers.data
-  //       }))
-  //     })
-  // }, [])
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
