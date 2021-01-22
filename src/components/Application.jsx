@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
 import DayList from "./DayList"
 import Appointment from "./Appointment"
@@ -33,7 +34,9 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    setState({...state, appointments})
+    return axios
+    .put(`api/appointments/${id}`, {interview})
+    .then(() => setState({...state, appointments}))
   }
 
   // Axios call to fetch info
