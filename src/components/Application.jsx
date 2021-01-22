@@ -6,7 +6,7 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../h
 import { fetchDays, fetchAppointments, fetchInterviewers } from "../helpers/helperFunctions";
 
 import "./Application.scss";
-import useVisualMode from "hooks/useVisualMode";
+// import useVisualMode from "hooks/useVisualMode";
 
 export default function Application(props) {
   // State
@@ -21,7 +21,19 @@ export default function Application(props) {
 
   // book interview
   function bookInterview(id, interview) {
-    console.log('id', id, 'interview', interview);
+    // console.log('id', id, 'interview', interview);
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState({...state, appointments})
   }
 
   // Axios call to fetch info
@@ -49,11 +61,11 @@ export default function Application(props) {
     const interview = getInterview(state, appointment.interview)
 
     return <Appointment
-    key={appointment.id}
-    {...appointment}
-    interview={interview}
-    interviewers={dailyInterviewers}
-    bookInterview={bookInterview}
+      key={appointment.id}
+      {...appointment}
+      interview={interview}
+      interviewers={dailyInterviewers}
+      bookInterview={bookInterview}
     />
   })
   // Adding last appt

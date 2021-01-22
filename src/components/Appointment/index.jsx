@@ -21,10 +21,13 @@ export default function Appointment(props) {
       interviewer
     };
     // console.log(props)
-    props.bookInterview(props.id, interview)
+    props.bookInterview(props.id, interview);
+
+    transition(SHOW);
   }
 
-  const { mode, transition, back } = useVisualMode(
+  const { mode, transition } = useVisualMode(
+  // const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 

@@ -10,7 +10,7 @@ export default function useVisualMode(initial) {
     if (replace) {
       setHistory(prev => {
         // remove last element of history, don't use .pop
-        const removedLatestMode = [...prev.slice(0, prev.length - 1)];
+        const removedLatestMode = [...prev.slice(0, -1)];
         console.log(history)
         return [...removedLatestMode, newMode];
       })
@@ -29,7 +29,7 @@ export default function useVisualMode(initial) {
   function back() {
     setHistory(prev => {
       if (prev.length > 1) {
-        const removedLatestMode = [...prev.slice(0, prev.length - 1)];
+        const removedLatestMode = [...prev.slice(0, -1)];
         // setMode to last element of updated history
         setMode(removedLatestMode.slice(-1)[0]);
         return removedLatestMode;
