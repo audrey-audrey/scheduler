@@ -13,10 +13,11 @@ import './styles.scss';
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
-const CREATE = "CREATE"
-const SAVING = "SAVING"
-const DELETING = "DELETING"
-const CONFIRM = "CONFIRM"
+const CREATE = "CREATE";
+const SAVING = "SAVING";
+const DELETING = "DELETING";
+const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
 
 export default function Appointment(props) {
   // save interview
@@ -41,7 +42,7 @@ export default function Appointment(props) {
       .catch((err) => console.log("Error", err))
   }
 
-    const { mode, transition, back } = useVisualMode(
+  const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
@@ -53,10 +54,18 @@ export default function Appointment(props) {
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
+          onEdit = {() => transition(EDIT)}
           onDelete={() => transition(CONFIRM)}
         />
       )}
       {mode === CREATE && (
+        <Form
+          interviewers={props.interviewers}
+          onSave={save} // ???
+          onCancel={() => transition(EMPTY)}
+        />
+      )}
+      {mode === EDIT && (
         <Form
           name={props.name}
           interviewers={props.interviewers}
