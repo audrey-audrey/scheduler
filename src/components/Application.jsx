@@ -39,6 +39,24 @@ export default function Application(props) {
     .then(() => setState({...state, appointments}))
   }
 
+  // cancelInterview 
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios
+    // .put(`api/appointments/${id}`, {interview: null})
+    .delete(`api/appointments/${id}`)
+    .then(() => setState({...state, appointments}))
+  }
+
   // Axios call to fetch info
   useEffect(() => {
     Promise.all([
@@ -69,6 +87,7 @@ export default function Application(props) {
       interview={interview}
       interviewers={dailyInterviewers}
       bookInterview={bookInterview}
+      cancelInterview={cancelInterview}
     />
   })
   // Adding last appt
