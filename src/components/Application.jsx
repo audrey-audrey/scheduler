@@ -37,6 +37,7 @@ export default function Application(props) {
     return axios
     .put(`api/appointments/${id}`, {interview})
     .then(() => setState({...state, appointments}))
+    
   }
 
   // cancelInterview 
@@ -52,7 +53,7 @@ export default function Application(props) {
     };
 
     return axios
-    // .put(`api/appointments/${id}`, {interview: null})
+    // .put(`api/appointments/${id}`, {student: null, interviewer: null})
     .delete(`api/appointments/${id}`)
     .then(() => setState({...state, appointments}))
   }
