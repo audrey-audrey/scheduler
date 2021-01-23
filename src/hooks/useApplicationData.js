@@ -34,9 +34,8 @@ export default function useApplicationData() {
 
   // book interview
   function bookInterview(id, interview) {
-    const addSpot = -1;
     const daysArr = [...state.days];
-    
+    const addSpot = state.appointments[id].interview ? 0 : -1;
     const days = updateSpots(daysArr, id, addSpot);
 
     const appointment = {
@@ -59,7 +58,7 @@ export default function useApplicationData() {
 
     const addSpot = 1;
     const daysArr = [...state.days];
-    
+
     const days = updateSpots(daysArr, id, addSpot);
 
     const appointment = {
@@ -77,19 +76,9 @@ export default function useApplicationData() {
       .then(() => setState({ ...state, days, appointments }))
   }
 
-  // alt
+  // update spots
   const updateSpots = (daysArr, id, num) => {
-    let newDaysArr = [];
-    
-    for (const day of daysArr) {
-      if(day.appointments.includes(id)) {
-        const newSpots = day.spots + num;
-        newDaysArr.push({...day, spots:newSpots})
-      } else {
-        newDaysArr.push(day);
-      }
-    };
-
+    const newDaysArr = daysArr.map(day => day.appointments.includes(id) ? { ...day, spots: day.spots + num } : day)
     return newDaysArr;
   };
 
