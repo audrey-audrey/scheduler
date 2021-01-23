@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 export default function Show(props) {
   const { student, interviewer, onEdit, onDelete } = props;
 
   // interviewer data - { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" }
-  
+
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">
@@ -31,5 +31,5 @@ export default function Show(props) {
         </section>
       </section>
     </main>
-  )
+  );
 }

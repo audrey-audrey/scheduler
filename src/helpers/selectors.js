@@ -10,7 +10,7 @@
  */
 export function getAppointmentsForDay(state, day) {
   const resultsArr = [];
-  const appointmentsArr = [];   // appointment ids only
+  const appointmentsArr = []; // appointment ids only
 
   const days = state.days;
   const appointments = state.appointments;
@@ -28,7 +28,7 @@ export function getAppointmentsForDay(state, day) {
   }
 
   return resultsArr;
-};
+}
 
 export function getInterview(state, interview) {
   let interviewData = null;
@@ -44,7 +44,7 @@ export function getInterview(state, interview) {
 
 export function getInterviewersForDay(state, day) {
   const resultsArr = [];
-  const interviewersArr = [];   // interviewer ids only
+  const interviewersArr = []; // interviewer ids only
 
   const days = state.days;
   const interviewers = state.interviewers;
@@ -63,5 +63,4 @@ export function getInterviewersForDay(state, day) {
   }
 
   return resultsArr;
-};
-
+}
