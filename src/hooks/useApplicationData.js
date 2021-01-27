@@ -78,7 +78,7 @@ export default function useApplicationData() {
 
     return axios
       .put(`api/appointments/${id}`, { interview })
-      .then(dispatch({ type: SET_INTERVIEW, value: { days, appointments } }));
+      .then(()=>dispatch({ type: SET_INTERVIEW, value: { days, appointments } }));
   }
 
   // cancelInterview
@@ -100,7 +100,7 @@ export default function useApplicationData() {
 
     return axios
       .delete(`api/appointments/${id}`)
-      .then({ type: SET_INTERVIEW, value: { days, appointments } });
+      .then(()=>dispatch({ type: SET_INTERVIEW, value: { days, appointments } }));
   }
 
   // update spots

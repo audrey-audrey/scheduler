@@ -33,9 +33,6 @@ export default function Appointment(props) {
   } = props;
 
   function save(name, interviewer) {
-    // if (!name || !interviewer) {
-    //   transition(ERROR_SAVE, true);
-    // } else {
     const interview = {
       student: name,
       interviewer,
@@ -44,7 +41,6 @@ export default function Appointment(props) {
     bookInterview(id, interview)
       .then(() => transition(SHOW))
       .catch((error) => transition(ERROR_SAVE, true));
-    // }
   }
 
   // delete interview
