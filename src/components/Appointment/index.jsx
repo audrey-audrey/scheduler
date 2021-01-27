@@ -58,7 +58,7 @@ export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
   return (
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
       <Header time={time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
