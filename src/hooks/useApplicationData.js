@@ -1,12 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-// import {
-//   fetchDays,
-//   fetchAppointments,
-//   fetchInterviewers,
-// } from "../helpers/helperFunctions";
-
 export default function useApplicationData() {
   // State
   const [state, setState] = useState({
@@ -17,20 +11,6 @@ export default function useApplicationData() {
 
   // setState funcs
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
-
-  // Axios call to fetch info
-  // useEffect(() => {
-  //   Promise.all([fetchDays(), fetchAppointments(), fetchInterviewers()]).then(
-  //     ([days, appointments, interviewers]) => {
-  //       setState((prev) => ({
-  //         ...prev,
-  //         days: days.data,
-  //         appointments: appointments.data,
-  //         interviewers: interviewers.data,
-  //       }));
-  //     }
-  //   );
-  // }, []);
 
   useEffect(() => {
 
