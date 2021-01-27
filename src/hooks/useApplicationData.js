@@ -1,34 +1,63 @@
-import { useState, useEffect } from "react";
+import { useReducer, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
   // State
-  const [state, setState] = useState({
+  const initialState = {
     day: "Monday",
     days: [],
     appointments: {},
-  });
+    interviewers: {},
+  };
+
+  // Using reducer
+  const SET_DAY = "SET_DAY";
+  const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
+  const SET_INTERVIEW = "SET_INTERVIEW";
+
+  function reducer(state, action) {
+    switch (action.type) {
+      case SET_DAY:
+        return { ...state, day: action.day };
+      case SET_APPLICATION_DATA:
+        const { days, appointments, interviewers } = action.value;
+        return {
+          ...state,
+          days,
+          appointments,
+          interviewers
+        };
+      case SET_INTERVIEW: {
+        const { days, appointments } = action.value;
+        return { ...state, days, appointments };
+      }
+      default:
+        throw new Error(
+          `Tried to reduce with unsupported action type: ${action.type}`
+        );
+    }
+  }
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   // setState funcs
-  const setDay = (day) => setState((prev) => ({ ...prev, day }));
+  const setDay = (day) => dispatch({ type: SET_DAY, day: day });
 
   useEffect(() => {
-
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
-      axios.get("/api/interviewers")
-    ])
-      .then(
-        ([days, appointments, interviewers]) => {
-          setState((prev) => ({
-            ...prev,
-            days: days.data,
-            appointments: appointments.data,
-            interviewers: interviewers.data,
-          }));
-        }
-      );
+      axios.get("/api/interviewers"),
+    ]).then(([days, appointments, interviewers]) => {
+      dispatch({
+        type: SET_APPLICATION_DATA,
+        value: {
+          days: days.data,
+          appointments: appointments.data,
+          interviewers: interviewers.data,
+        },
+      });
+    });
   }, []);
 
   // book interview
@@ -49,7 +78,7 @@ export default function useApplicationData() {
 
     return axios
       .put(`api/appointments/${id}`, { interview })
-      .then(() => setState({ ...state, days, appointments }));
+      .then(dispatch({ type: SET_INTERVIEW, value: { days, appointments } }));
   }
 
   // cancelInterview
@@ -71,7 +100,7 @@ export default function useApplicationData() {
 
     return axios
       .delete(`api/appointments/${id}`)
-      .then(() => setState({ ...state, days, appointments }));
+      .then({ type: SET_INTERVIEW, value: { days, appointments } });
   }
 
   // update spots

@@ -36,14 +36,14 @@ export default function Appointment(props) {
     // if (!name || !interviewer) {
     //   transition(ERROR_SAVE, true);
     // } else {
-      const interview = {
-        student: name,
-        interviewer,
-      };
-      transition(SAVING);
-      bookInterview(id, interview)
-        .then(() => transition(SHOW))
-        .catch((error) => transition(ERROR_SAVE, true));
+    const interview = {
+      student: name,
+      interviewer,
+    };
+    transition(SAVING);
+    bookInterview(id, interview)
+      .then(() => transition(SHOW))
+      .catch((error) => transition(ERROR_SAVE, true));
     // }
   }
 
@@ -72,7 +72,7 @@ export default function Appointment(props) {
       {mode === CREATE && (
         <Form
           interviewers={interviewers}
-          onSave={save} 
+          onSave={save}
           onCancel={() => transition(EMPTY)}
           mode={CREATE}
         />

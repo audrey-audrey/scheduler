@@ -6,7 +6,7 @@ import Button from "../Button";
 export default function Form(props) {
   const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
 
   const reset = () => {
     setName("");
@@ -54,10 +54,7 @@ export default function Form(props) {
           <Button danger onClick={cancel}>
             Cancel
           </Button>
-          <Button
-            confirm
-            onClick={validate}
-          >
+          <Button confirm onClick={validate}>
             Save
           </Button>
         </section>
