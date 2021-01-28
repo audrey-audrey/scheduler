@@ -24,7 +24,7 @@ export default function useVisualMode(initial) {
     setHistory((prev) => {
       if (prev.length > 1) {
         const removedLatestMode = [...prev.slice(0, -1)];
-        const lastModeInArray = slice(-1)[0];
+        const lastModeInArray = removedLatestMode.slice(-1)[0];
         setMode(lastModeInArray);
         return removedLatestMode;
       } else {
