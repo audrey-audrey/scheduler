@@ -37,15 +37,6 @@ deploy:
 
 workflows:
   version: 2
-  test_and_deploy:
+  test:
     jobs:
-      - build:
-          filters:
-            branches:
-              ignore: production
-      - deploy:
-          filters:
-            branches:
-              ignore: production
-          requires:
-            - build
+      - build
