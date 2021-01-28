@@ -38,10 +38,10 @@ export default function Application(props) {
       />
     );
   });
-  // Adding last appt
+  // Adding last appointment for the day
   schedule.push(<Appointment key="last" time="5pm" />);
 
-  // App
+  // Application
   return (
     <main className="layout">
       <section className="sidebar">

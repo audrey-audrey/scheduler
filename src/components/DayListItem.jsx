@@ -12,6 +12,7 @@ export default function DayListItem(props) {
     "day-list__item--full": spots === 0,
   });
 
+  // Formatting sentence for spots remaining
   const formatSpots = `${spots === 0 ? "no" : spots} ${
     spots === 1 ? "spot" : "spots"
   } remaining`;

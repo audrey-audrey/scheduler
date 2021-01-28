@@ -1,16 +1,6 @@
-/**
- * 
- * @param {*} state object - { days: [{ id: 1, 
- *                                      name: "Monday",  
- *                                      appointments: [1, 2, 3]}}, .... ], 
- *                            appointments: { "1": { id: 1,
-                                                      time: "12pm",
-                                                      interview: { student: "Archie Cohen", interviewer: 2 }}, ... }
- * @param {*} day string - "Monday" etc
- */
 export function getAppointmentsForDay(state, day) {
   const resultsArr = [];
-  const appointmentsArr = []; // appointment ids only
+  const appointmentsArr = []; 
 
   const days = state.days;
   const appointments = state.appointments;
@@ -44,11 +34,10 @@ export function getInterview(state, interview) {
 
 export function getInterviewersForDay(state, day) {
   const resultsArr = [];
-  const interviewersArr = []; // interviewer ids only
+  const interviewersArr = []; 
 
   const days = state.days;
   const interviewers = state.interviewers;
-  // console.log(interviewers)
 
   for (const item of days) {
     if (item.name === day) {

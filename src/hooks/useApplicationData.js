@@ -2,7 +2,7 @@ import { useReducer, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
-  // State
+  // Initial state
   const initialState = {
     day: "Monday",
     days: [],
@@ -10,7 +10,7 @@ export default function useApplicationData() {
     interviewers: {},
   };
 
-  // Using reducer
+  // Managing state with reducer
   const SET_DAY = "SET_DAY";
   const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
   const SET_INTERVIEW = "SET_INTERVIEW";
@@ -40,9 +40,9 @@ export default function useApplicationData() {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // setState funcs
   const setDay = (day) => dispatch({ type: SET_DAY, day: day });
 
+  // Fetching initial data from API
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),
@@ -60,7 +60,14 @@ export default function useApplicationData() {
     });
   }, []);
 
-  // book interview
+  // Updating Interview 
+  const updateSpots = (daysArr, id, num) => {
+    const newDaysArr = daysArr.map((day) =>
+      day.appointments.includes(id) ? { ...day, spots: day.spots + num } : day
+    );
+    return newDaysArr;
+  };
+
   function bookInterview(id, interview) {
     const daysArr = [...state.days];
     const addSpot = state.appointments[id].interview ? 0 : -1;
@@ -68,20 +75,19 @@ export default function useApplicationData() {
 
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview },
+      interview: { ...interview }
     };
 
     const appointments = {
       ...state.appointments,
-      [id]: appointment,
+      [id]: appointment
     };
 
     return axios
       .put(`api/appointments/${id}`, { interview })
-      .then(()=>dispatch({ type: SET_INTERVIEW, value: { days, appointments } }));
+      .then(() => dispatch({ type: SET_INTERVIEW, value: { days, appointments } }));
   }
 
-  // cancelInterview
   function cancelInterview(id) {
     const addSpot = 1;
     const daysArr = [...state.days];
@@ -90,26 +96,18 @@ export default function useApplicationData() {
 
     const appointment = {
       ...state.appointments[id],
-      interview: null,
+      interview: null
     };
 
     const appointments = {
       ...state.appointments,
-      [id]: appointment,
+      [id]: appointment
     };
 
     return axios
       .delete(`api/appointments/${id}`)
-      .then(()=>dispatch({ type: SET_INTERVIEW, value: { days, appointments } }));
+      .then(() => dispatch({ type: SET_INTERVIEW, value: { days, appointments } }));
   }
-
-  // update spots
-  const updateSpots = (daysArr, id, num) => {
-    const newDaysArr = daysArr.map((day) =>
-      day.appointments.includes(id) ? { ...day, spots: day.spots + num } : day
-    );
-    return newDaysArr;
-  };
 
   return { state, setDay, bookInterview, cancelInterview };
 }
